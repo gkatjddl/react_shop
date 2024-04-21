@@ -1,12 +1,14 @@
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container, Nav ,Navbar, Button, Form, Row,Col} from 'react-bootstrap';
+import {Container, Nav ,Navbar, Button, Row, Col} from 'react-bootstrap';
 import './App.css';
 import data from './data'
 import {num1, num2, num3} from './data.js'
 // 이미지를 사용하려면 import
 import mainBG from './data.js'
 import { useState } from 'react';
+import DetailPage from './pages/Detail.js';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 
 function App() {
@@ -16,19 +18,38 @@ function App() {
 
   let [items, setItems] = useState(data);
   let [photo, setPhoto] = useState(['/bird-adalt.jpg','/bird-baby.jpg','/fish.jpg']);
+  let navigate = useNavigate()
 
   return (
     <div className="App">
-      <Navbar bg="dark" data-bs-theme="dark">
+            <Navbar bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="#home"><img src='/logo192.png' width={'70px'} height={'70px'}/></Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">홈</Nav.Link>
-            <Nav.Link href="#features">상세페이지</Nav.Link>
-            <Nav.Link href="#pricing">about</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/')}}>홈</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/Detail')}}>상세페이지</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/about')}}>about</Nav.Link>
+            <Nav.Link onClick={()=>{navigate(-1)}}>뒤로가기</Nav.Link>
+            <Nav.Link onClick={()=>{navigate(1)}}>앞으로가기</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
+      <Routes>
+      <Route path='/' element={
+        <>
+        <div className='main-bg'></div>
+        <Container>
+        <Row>
+          {/* data갯수와 image가 바뀔수있으니 useState처리*/}
+          {/* map을 통해서 useState(data) 만큼 반복*/}
+          {items.map((item,index)=>(<ItemCol key={index} data={item} img={photo[index]}/>
+              ))}
+        </Row>
+      </Container>
+      </>
+      }></Route>
+      <Route path='/detail' element={<DetailPage items= {items}/>}></Route>
+      </Routes>
 {
   /*
         <div className='main-bg'>
@@ -36,32 +57,9 @@ function App() {
       </div>
 
       <div style={{backgroundImage:`url(/logo192.png)`, height:'300px', width:'100%', backgroundSize:'cover', backgroundPosition:'center'}}>
-
       </div>
   */
-}
-
-      <div className='main-bg'>
-
-      </div>
-      <Container>
-      <Row>
-        {/* data갯수와 image가 바뀔수있으니 useState처리*/}
-        {/* map을 통해서 useState(data) 만큼 반복*/}
-        {items.map((item,index)=>(<ItemCol key={index} data={item} img={photo[index]}/>
-            ))}
-      </Row>
-      <Row>
-        <Col>4</Col>
-        <Col>5</Col>
-        <Col>6</Col>
-      </Row>
-    </Container>
-
-      <br/>
-
-      <Button variant="primary">기본버튼</Button>{''}
-    </div>
+}</div>
   );
 }
 
