@@ -14,8 +14,15 @@ let data = [
   { 
     id : 2,
     title:'물고기',
-    content:'장식용 물곡기',
+    content:'장식용 물고기',
     price:1500
+
+  },
+  { 
+    id : 3,
+    title:'로고',
+    content:'로고',
+    price:100
 
   }
 ]

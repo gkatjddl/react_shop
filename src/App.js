@@ -8,7 +8,7 @@ import {num1, num2, num3} from './data.js'
 import mainBG from './data.js'
 import { useState } from 'react';
 import DetailPage from './pages/Detail.js';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet, Link } from 'react-router-dom';
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
   // 자바스크립트 파일은 확장자명을 생략(.js 안붙임)
 
   let [items, setItems] = useState(data);
-  let [photo, setPhoto] = useState(['/bird-adalt.jpg','/bird-baby.jpg','/fish.jpg']);
+  let [photo, setPhoto] = useState(['/bird-adalt.jpg','/bird-baby.jpg','/fish.jpg','/logo192.png']);
   let navigate = useNavigate()
 
   return (
@@ -34,6 +34,7 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
+      
       <Routes>
       <Route path='/' element={
         <>
@@ -48,18 +49,21 @@ function App() {
       </Container>
       </>
       }></Route>
-      <Route path='/detail' element={<DetailPage items= {items}/>}></Route>
+      <Route path='/detail/:id' element={<DetailPage items= {items} id={0} img={photo}/>}></Route>
+      {/*
+      <Route path='/detail/1' element={<DetailPage items= {items} id={1} img={photo}/>}></Route>
+      <Route path='/detail/2' element={<DetailPage items= {items} id={2} img={photo}/>}></Route>
+      */}
+      
+      <Route path='/about' element={<AboutPage/>}>
+        <Route path='address' element={<div>주소</div>}></Route>
+        <Route path='location' element={<div>위치</div>}></Route>
+      </Route>
+      <Route path='*' element={<div>그 와의 페이지(404)</div>}></Route>
       </Routes>
-{
-  /*
-        <div className='main-bg'>
 
-      </div>
-
-      <div style={{backgroundImage:`url(/logo192.png)`, height:'300px', width:'100%', backgroundSize:'cover', backgroundPosition:'center'}}>
-      </div>
-  */
-}</div>
+      <Link to="/about/address"><Button variant='warning'>리액트 부트스트랩 버튼</Button></Link>
+    </div>
   );
 }
 
@@ -78,6 +82,18 @@ function ItemCol(props)
         <h4>{props.data.title}</h4>
         <p>{props.data.price}원</p>
       </Col>
+    </>
+  )
+}
+
+// 어바웃페이지의 컴포넌트
+function AboutPage(){
+  return(
+    <>
+      <div>
+        <h4>어바웃 페이지</h4>
+        <Outlet/>
+      </div>
     </>
   )
 }
