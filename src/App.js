@@ -9,6 +9,7 @@ import mainBG from './data.js'
 import { useState } from 'react';
 import DetailPage from './pages/Detail.js';
 import { Routes, Route, useNavigate, Outlet, Link } from 'react-router-dom';
+import Cart from './pages/Cart.js';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Nav.Link onClick={()=>{navigate('/')}}>홈</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/Detail')}}>상세페이지</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/about')}}>about</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/cart')}}>장바구니</Nav.Link>
             <Nav.Link onClick={()=>{navigate(-1)}}>뒤로가기</Nav.Link>
             <Nav.Link onClick={()=>{navigate(1)}}>앞으로가기</Nav.Link>
           </Nav>
@@ -59,10 +61,12 @@ function App() {
         <Route path='address' element={<div>주소</div>}></Route>
         <Route path='location' element={<div>위치</div>}></Route>
       </Route>
-      <Route path='*' element={<div>그 와의 페이지(404)</div>}></Route>
+      <Route path='/cart' element={<Cart/>}></Route>
+      <Route path='*' element={<div>그 외의 페이지(404)</div>}></Route>
       </Routes>
-
+      {/*
       <Link to="/about/address"><Button variant='warning'>리액트 부트스트랩 버튼</Button></Link>
+       */}
     </div>
   );
 }
